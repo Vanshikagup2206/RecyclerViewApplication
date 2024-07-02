@@ -19,12 +19,48 @@
         android:layout_height="wrap_content"
         android:text="@string/enter_description"
         android:textSize="@dimen/sp_20"/>
+
     <EditText
+        android:id="@+id/etDescription"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="123dp"
         android:hint="@string/enter_description"
+        android:maxEms="3"
+        android:textSize="@dimen/sp_20" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:textSize="@dimen/sp_20"
-        android:id="@+id/etDescription" />
+        android:text="@string/select_priority"/>
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/radioButton"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/orange"
+            android:id="@+id/rbLow"
+            android:text="@string/low"
+            android:textSize="@dimen/sp_20"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/blue"
+            android:id="@+id/rbMedium"
+            android:text="@string/medium"
+            android:textSize="@dimen/sp_20"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/green"
+            android:id="@+id/rbHigh"
+            android:text="@string/high"
+            android:textSize="@dimen/sp_20"/>
+    </RadioGroup>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

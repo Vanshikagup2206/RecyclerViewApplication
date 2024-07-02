@@ -1,11 +1,13 @@
 package com.vanshika.recyclerviewapplication
 
 import android.app.Dialog
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.Adapter
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vanshika.recyclerviewapplication.databinding.ActivityMainBinding
 import com.vanshika.recyclerviewapplication.databinding.CustomDialogBinding
@@ -33,12 +35,23 @@ class MainActivity : AppCompatActivity() {
                     dialogBinding.etTitle.error = resources.getString(R.string.enter_title)
                 }else if (dialogBinding.etDescription.text.toString().isEmpty()){
                     dialogBinding.etDescription.error = resources.getString(R.string.enter_description)
-                }else{
+                }else if (dialogBinding.radioButton.checkedRadioButtonId == -1){
+                    Toast.makeText(this, resources.getString(R.string.select_one), Toast.LENGTH_SHORT).show()
+                }
+                else{
                     list.add(TaskDataClass(
                         dialogBinding.etTitle.text.toString(),
                         dialogBinding.etDescription.text.toString()
                     ))
-                    adapter.notifyDataSetChanged()
+                    dialogBinding.rbLow.setOnClickListener {
+                        binding?.recyclerView?.setBackgroundColor(Color.parseColor("#FF4800"))
+                    }
+                    dialogBinding.rbMedium.setOnClickListener {
+                        binding?.recyclerView?.setBackgroundColor(Color.parseColor("#03A9F4"))
+                    }
+                    dialogBinding.rbHigh.setOnClickListener {
+                        binding?.recyclerView?.setBackgroundColor(Color.parseColor("#009688"))
+                    }
                     dialog.dismiss()
                 }
             }
