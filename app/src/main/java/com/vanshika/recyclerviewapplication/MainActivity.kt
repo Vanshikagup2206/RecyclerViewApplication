@@ -44,13 +44,13 @@ class MainActivity : AppCompatActivity() {
                         dialogBinding.etDescription.text.toString()
                     ))
                     dialogBinding.rbLow.setOnClickListener {
-                        binding?.recyclerView?.setBackgroundColor(Color.parseColor("#FF4800"))
+                        binding?.recyclerView?.setBackgroundColor(resources.getColor(R.color.orange))
                     }
                     dialogBinding.rbMedium.setOnClickListener {
-                        binding?.recyclerView?.setBackgroundColor(Color.parseColor("#03A9F4"))
+                        binding?.recyclerView?.setBackgroundColor(resources.getColor(R.color.blue))
                     }
                     dialogBinding.rbHigh.setOnClickListener {
-                        binding?.recyclerView?.setBackgroundColor(Color.parseColor("#009688"))
+                        binding?.recyclerView?.setBackgroundColor(resources.getColor(R.color.green))
                     }
                     dialog.dismiss()
                 }
