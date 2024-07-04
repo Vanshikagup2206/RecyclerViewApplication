@@ -19,14 +19,14 @@
         android:layout_height="wrap_content"
         android:text="@string/enter_description"
         android:textSize="@dimen/sp_20"/>
-
     <EditText
         android:id="@+id/etDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/enter_description"
+        android:minLines="5"
+        android:gravity="top|start"
         android:textSize="@dimen/sp_20" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,28 +37,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/radioButton"
-        android:layout_gravity="center"
-        android:orientation="vertical">
+        android:layout_gravity="center">
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/orange"
-            android:id="@+id/rbLow"
             android:text="@string/low"
+            android:id="@+id/rbLow"
+            android:textColor="@color/orange"
             android:textSize="@dimen/sp_20"/>
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/blue"
-            android:id="@+id/rbMedium"
             android:text="@string/medium"
+            android:id="@+id/rbMedium"
+            android:textColor="@color/blue"
             android:textSize="@dimen/sp_20"/>
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/green"
-            android:id="@+id/rbHigh"
             android:text="@string/high"
+            android:id="@+id/rbHigh"
+            android:textColor="@color/green"
             android:textSize="@dimen/sp_20"/>
     </RadioGroup>
     <Button
@@ -68,5 +67,4 @@
         android:text="@string/add"
         android:id="@+id/btnAdd"
         android:textSize="@dimen/sp_20"/>
-
 </LinearLayout>
