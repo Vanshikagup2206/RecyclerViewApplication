@@ -2,6 +2,7 @@ package com.vanshika.recyclerviewapplication
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.devicelock.DeviceId
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -50,24 +51,48 @@ class MainActivity : AppCompatActivity(), TaskClickInterface {
                         3
                     else
                         0
-                    list.add(TaskDataClass(
-                        title = dialogBinding.etTitle.text.toString(),
-                        description = dialogBinding.etDescription.text.toString(),
-                        priority = priority
-                    ))
-//                    toDoDatabase.todoDao().insertTodo(
-//                        TaskDataClass(
-//                            title = dialogBinding.etTitle.text.toString(),
-//                            description = dialogBinding.etDescription.text.toString(),
-//                            priority = priority
-//                        )
-//                    )
-//                    getList()
+//                    list.add(TaskDataClass(
+//                        title = dialogBinding.etTitle.text.toString(),
+//                        description = dialogBinding.etDescription.text.toString(),
+//                        priority = priority
+//                    ))
+                    toDoDatabase.todoDao().insertTodo(
+                        TaskDataClass(
+                            title = dialogBinding.etTitle.text.toString(),
+                            description = dialogBinding.etDescription.text.toString(),
+                            priority = priority
+                        )
+                    )
+                    getList()
                     dialog.dismiss()
                 }
             }
         }
-//        getList()
+        getList()
+        binding?.rbAllAccPriority?.setOnCheckedChangeListener { buttonView, isChecked ->
+            if(isChecked){ getList() }
+        }
+        binding?.rbLowAccPriority?.setOnCheckedChangeListener { buttonView, isChecked ->
+            if(isChecked){
+                list.clear()
+                list.addAll(toDoDatabase.todoDao().changeAccPriority(1))
+                adapter.notifyDataSetChanged()
+            }
+        }
+        binding?.rbMediumAccPriority?.setOnCheckedChangeListener { buttonView, isChecked ->
+            if(isChecked){
+                list.clear()
+                list.addAll(toDoDatabase.todoDao().changeAccPriority(2))
+                adapter.notifyDataSetChanged()
+            }
+        }
+        binding?.rbHighAccPriority?.setOnCheckedChangeListener { buttonView, isChecked ->
+            if(isChecked){
+                list.clear()
+                list.addAll(toDoDatabase.todoDao().changeAccPriority(3))
+                adapter.notifyDataSetChanged()
+            }
+        }
     }
 
     override fun updateTask(position: Int) {
@@ -79,6 +104,13 @@ class MainActivity : AppCompatActivity(), TaskClickInterface {
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
             show()
+            dialogBinding.etTitle.setText(list[position].title)
+            dialogBinding.etDescription.setText(list[position].description)
+            when(list[position].priority){
+                1-> dialogBinding.rbLow.isChecked = true
+                2-> dialogBinding.rbLow.isChecked = true
+                3-> dialogBinding.rbLow.isChecked = true
+            }
             dialogBinding.btnAdd.setOnClickListener {
                 if (dialogBinding.etTitle.text.toString().isEmpty()){
                     dialogBinding.etTitle.error = resources.getString(R.string.enter_title)
@@ -96,20 +128,22 @@ class MainActivity : AppCompatActivity(), TaskClickInterface {
                     } else {
                         0
                     }
-                    list.set(
-                        position, TaskDataClass(
-                            title = dialogBinding.etTitle.text.toString(),
-                            description = dialogBinding.etDescription.text.toString(),
-                            priority = priority
-                        )
-                    )
-//                    toDoDatabase.todoDao().updateList(TaskDataClass(
-//                        id = 0,
-//                        title = dialogBinding.etTitle.text.toString(),
-//                        description = dialogBinding.etDescription.text.toString(),
-//                        priority = priority
-//                    ))
+//                    list.set(
+//                        position, TaskDataClass(
+//                            title = dialogBinding.etTitle.text.toString(),
+//                            description = dialogBinding.etDescription.text.toString(),
+//                            priority = priority
+//                        )
+//                    )
+
+                    toDoDatabase.todoDao().updateList(TaskDataClass(
+                        id = list[position].id,
+                        title = dialogBinding.etTitle.text.toString(),
+                        description = dialogBinding.etDescription.text.toString(),
+                        priority = priority
+                    ))
                     adapter.notifyDataSetChanged()
+                    getList()
                     dismiss()
                 }
             }
@@ -120,14 +154,17 @@ class MainActivity : AppCompatActivity(), TaskClickInterface {
         var alertDialog = AlertDialog.Builder(this)
         alertDialog.setTitle(resources.getString(R.string.are_you_sure_you_want_to_delete_this))
         alertDialog.setPositiveButton(resources.getString(R.string.yes)){_,_ ->
-            list.removeAt(position)
+//            list.removeAt(position)
+            toDoDatabase.todoDao().deleteList(list[position])
             adapter.notifyDataSetChanged()
         }
         alertDialog.setNegativeButton(resources.getString(R.string.no)){_,_ ->
         }
+        getList()
         alertDialog.show()
     }
     fun getList(){
+        list.clear()
         list.addAll(toDoDatabase.todoDao().getList())
         adapter.notifyDataSetChanged()
     }
