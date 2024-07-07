@@ -24,4 +24,16 @@ interface TodoDao {
 
     @Query("SELECT * FROM TaskDataClass WHERE priority =:priority")
     fun changeAccPriority(priority : Int) : List<TaskDataClass>
+
+    @Insert
+    fun insertSingleNotes(todoEntity: TodoEntity)
+
+    @Query("SELECT * FROM TodoEntity WHERE taskId =:taskId")
+    fun getSingleNotes(taskId : Int): List<TodoEntity>
+
+    @Update
+    fun updateSingleNotes(todoEntity: TodoEntity)
+
+    @Delete
+    fun deleteSingleNotes(todoEntity: TodoEntity)
 }
