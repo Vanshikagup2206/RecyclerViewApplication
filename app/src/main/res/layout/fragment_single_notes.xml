@@ -18,7 +18,7 @@
         android:text="@string/title"
         android:gravity="center"
         android:textSize="@dimen/sp_20"/>
-    <EditText
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/title"
@@ -30,7 +30,7 @@
         android:text="@string/description"
         android:gravity="center"
         android:textSize="@dimen/sp_20"/>
-    <EditText
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/etDescription"
@@ -45,6 +45,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:id="@+id/rvSingleNotes"/>
     </LinearLayout>
     <com.google.android.material.floatingactionbutton.FloatingActionButton

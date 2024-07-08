@@ -74,10 +74,9 @@ class SingleNotesFragment : Fragment(), SingleNotesInterface {
                     } else {
                         todoDatabase?.todoDao()?.insertSingleNotes(
                             TodoEntity(
-                                id = taskDataClass.id,
                                 taskId = taskDataClass.id,
                                 todo = dialogBinding.etTodo.text.toString(),
-                                isCompleted = true
+                                isCompleted = dialogBinding.cbCompleted.isChecked
                             )
                         )
                         todoEntity.clear()
