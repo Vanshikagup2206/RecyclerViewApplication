@@ -27,9 +27,7 @@ class TodoItemRecycler(var todoEntity: ArrayList<TodoEntity>, var singleNotesInt
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.tvTodo.setText(todoEntity[position].todo)
-        if (todoEntity[position].isCompleted == true){
-            holder.cbCompleted.isChecked
-        }
+        holder.cbCompleted.isChecked = todoEntity[position].isCompleted?:false
         holder.btnUpdate.setOnClickListener {
             singleNotesInterface.updateSingleNotes(position)
         }
