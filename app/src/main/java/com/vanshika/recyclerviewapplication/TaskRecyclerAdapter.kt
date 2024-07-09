@@ -11,13 +11,17 @@ import android.widget.RadioButton
 import androidx.core.content.ContextCompat
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import java.text.SimpleDateFormat
+import java.util.Calendar
 
-class TaskRecyclerAdapter(var context : Context, var list : ArrayList<TaskDataClass>, var taskClickInterface: TaskClickInterface) : RecyclerView.Adapter<TaskRecyclerAdapter.ViewHolder>() {
+class TaskRecyclerAdapter(var context : Context, var list : ArrayList<TaskShownList>, var taskClickInterface: TaskClickInterface) : RecyclerView.Adapter<TaskRecyclerAdapter.ViewHolder>() { //to connect with foreign key change lis
     class ViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
         var tvTitle :TextView = view.findViewById(R.id.tvTitle)
         var tvDescription : TextView = view.findViewById(R.id.tvDescription)
+        var tvDate : TextView = view.findViewById(R.id.tvDate)
         var btnUpdate : Button = view.findViewById(R.id.btnUpdate)
         var btnDelete : Button = view.findViewById(R.id.btnDelete)
+        var todoList : TextView = view.findViewById(R.id.tvTodo)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -30,9 +34,12 @@ class TaskRecyclerAdapter(var context : Context, var list : ArrayList<TaskDataCl
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.tvTitle.setText(list[position].title)
-        holder.tvDescription.setText(list[position].description)
-        when(list[position].priority){
+        holder.tvTitle.setText(list[position].taskDataClass.title) //to get data from previous database add its name like taskDataClass.title
+        holder.tvDescription.setText(list[position].taskDataClass.description)
+        var createdDate = Calendar.getInstance()
+        createdDate.time = list[position].taskDataClass.createDate
+        holder.tvDate.setText(SimpleDateFormat("dd/MMM/YYYY").format(createdDate.time))
+        when(list[position].taskDataClass.priority){
             1->
                 holder.itemView.setBackgroundColor(ContextCompat.getColor(context,R.color.orange))
             2->
@@ -49,5 +56,8 @@ class TaskRecyclerAdapter(var context : Context, var list : ArrayList<TaskDataCl
         holder.itemView.setOnClickListener{
             taskClickInterface.itemClick(position)
         }
+        holder.todoList.setText(
+            list[position].todoList.toString()
+        )
     }
 }

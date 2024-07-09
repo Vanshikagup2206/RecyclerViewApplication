@@ -19,7 +19,7 @@ import com.vanshika.recyclerviewapplication.databinding.FragmentTodoListBinding
 class TodoListFragment : Fragment(), TaskClickInterface {
     var binding: FragmentTodoListBinding? = null
     lateinit var manager: LinearLayoutManager
-    var list = arrayListOf<TaskDataClass>()
+    var list = arrayListOf<TaskShownList>() //change list name
     lateinit var adapter: TaskRecyclerAdapter
     lateinit var toDoDatabase: TodoDatabase
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -125,9 +125,9 @@ class TodoListFragment : Fragment(), TaskClickInterface {
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
             show()
-            dialogBinding.etTitle.setText(list[position].title)
-            dialogBinding.etDescription.setText(list[position].description)
-            when (list[position].priority) {
+            dialogBinding.etTitle.setText(list[position].taskDataClass.title)//similarly here also we need to use previous database to get its list items
+            dialogBinding.etDescription.setText(list[position].taskDataClass.description)
+            when (list[position].taskDataClass.priority) {
                 1 -> dialogBinding.rbLow.isChecked = true
                 2 -> dialogBinding.rbLow.isChecked = true
                 3 -> dialogBinding.rbLow.isChecked = true
@@ -164,10 +164,11 @@ class TodoListFragment : Fragment(), TaskClickInterface {
 
                     toDoDatabase.todoDao().updateList(
                         TaskDataClass(
-                            id = list[position].id,
+                            id = list[position].taskDataClass.id,
                             title = dialogBinding.etTitle.text.toString(),
                             description = dialogBinding.etDescription.text.toString(),
-                            priority = priority
+                            priority = priority,
+                            createDate = list[position].taskDataClass.createDate
                         )
                     )
                     adapter.notifyDataSetChanged()
@@ -183,7 +184,7 @@ class TodoListFragment : Fragment(), TaskClickInterface {
         alertDialog.setTitle(resources.getString(R.string.are_you_sure_you_want_to_delete_this))
         alertDialog.setPositiveButton(resources.getString(R.string.yes)) { _, _ ->
 //            list.removeAt(position)
-            toDoDatabase.todoDao().deleteList(list[position])
+            toDoDatabase.todoDao().deleteList(list[position].taskDataClass)
             adapter.notifyDataSetChanged()
         }
         alertDialog.setNegativeButton(resources.getString(R.string.no)) { _, _ ->
